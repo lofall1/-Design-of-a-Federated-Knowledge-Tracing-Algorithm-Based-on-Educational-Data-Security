@@ -70,7 +70,7 @@ from torch.utils.data import Dataset
 #             q = group["sequence_id"].values
 #             a = group["correct"].values
 
-#             # ❗ 不滑窗，避免数据泄漏
+#             #  不滑窗，避免数据泄漏
 #             if len(q) >= seq_len:
 #                 self.data.append((
 #                     torch.LongTensor(q[:seq_len]),
@@ -87,7 +87,7 @@ class KTDataset(Dataset):
             a = group["correct"].values
             if len(q) < 10:
                 continue
-            # ✅ 恢复滑窗（但只在train/test内部）
+            #  恢复滑窗（但只在train/test内部）
             for i in range(len(q) - seq_len):
                 if i + seq_len <= len(q):
                     self.data.append((
@@ -119,7 +119,7 @@ def load_data(file_path):
     return df, len(q2idx)
 
 
-# ✅ 按学生划分（关键）
+#  按学生划分
 def train_test_split(df, test_ratio=0.2):
     users = df["user_id"].unique()
 
